@@ -19,9 +19,9 @@ def load_penguins(filename):
 
 
 #Claire Fuller Calculations:
-#--------Helper Functions for calculate gender distrubution----------Claire Fuller
+#--------Helper Functions for calculate gender/species distrubution----------Claire Fuller
 #gender occurance grouping functions 
-def group_island_by_sex(penguins): # group penguin by island and gender and species occurance
+def group_species_island_by_sex(penguins): # group penguin by island and gender and species occurance
     counts = {}
     for p in penguins:
         species = p.get("species", "Unknown")
@@ -66,13 +66,65 @@ def calculate_percentage(counts_dict):
     
 
     return percentages
+#--------Final call for calculate gender/species distrubution----------Claire Fuller
+def calculate_gender_distribution(penguins):
+    grouped = group_species_island_by_sex(penguins)
+    percentages = calculate_percentage(grouped)
+    return percentages
 
-def 
+#--------Helper Functions size of penguin vs island----------Claire Fuller
 
+def group_data_by_island(penguins):
+    data = {}
 
+    for penguin in penguins:
+        island = penguin.get("island", "Unknown")
 
+        # If the island isn't in the dictionary yet, create an entry for it
+        if island not in data:
+            data[island] = {"body_mass": [], "flipper_length": []}
 
-#split up the functions that me and my group are doing
+        try: # had to ask chatgpt about tru and except erros because i forgot from 106
+            body_mass = penguin.get("body_mass")
+            flipper_length = penguin.get("flipper_length")
+
+            if body_mass:
+                data[island]["body_mass"].append(float(body_mass))
+            if flipper_length:
+                data[island]["flipper_length"].append(float(flipper_length))
+        except ValueError:
+            continue
+
+    return data
+
+#finding the averages for weight and flipper size
+def compute_averages(grouped_data):
+    averages = {}
+
+    for island, values in grouped_data.items():
+        avg_mass = safe_average(values["body_mass"])
+        avg_flipper = safe_average(values["flipper_length"])
+
+        averages[island] = {
+            "avg_body_mass": avg_mass,
+            "avg_flipper_length": avg_flipper
+        }
+
+    return averages
+
+# make sure if there none is returns none
+def safe_average(numbers):
+    if not numbers:
+        return None
+    return round(sum(numbers) / len(numbers), 2)
+
+#--------Final call for analyze size vs island----------Claire Fuller
+def analyze_size_vs_island(penguins):
+
+    grouped_data = group_data_by_island(penguins)
+    averages = compute_averages(grouped_data)
+
+    return averages
 
 #call functions
 #def main():
