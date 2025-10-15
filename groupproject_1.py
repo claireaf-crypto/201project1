@@ -46,6 +46,24 @@ def most_pop(penguins):   #Abbey Halabis's calculation
     return overall_largest, largest_per_year
 
 
+#Abbey Halabis Calculations:
+def calculate_species_island_distribution(penguins):
+    """
+    Calculates the percentage of each species living on each island in each year.
+    Returns: {year: {species: {island: percentage}}}
+    penguins is a list of dicts wheere each dict represents one penguin
+    """
+    totals = {}     # total per species per year
+    counts = {}     # counts- tracks how many penguins per species lives on the island per year
+
+    #this loops through every penguin in the list 
+    #gets the exact year, species and island for the penguin
+    for penguin in penguins:
+        year = penguin.get("year")
+        species = penguin.get("species")
+        island = penguin.get("island")
+        if not (year and species and island): #if any of these are missing or not here it will skip
+            continue
 
 
 
