@@ -15,7 +15,35 @@ def load_penguins(filename):
     #print (data)
     return data
 
-#Anna Kerhouslas calculations:
+#Anna Kerhoulas Calculations:
+### Helper Function 1:
+def get_penguin_beaksize(penguins, species): 
+    sizes_list = []
+    for p in penguins:
+        if (p['species'] == species and p['bill_length_mm'] != 'NA' and p['bill_depth_mm'] != 'NA'):
+            # Calculate overall beak size as the average of bill length and bill depth (in mm)
+            beak_size = (float(p['bill_length_mm']) + float(p['bill_depth_mm'])) / 2
+            sizes_list.append(beak_size)
+    return sizes_list
+### Primary Function 1: 
+def average_beak_size(penguins):
+    species_averages = {}
+    species_list = list(set(p['species'] for p in penguins if p['species'] != ''))
+    for species in species_list:
+        sizes = get_penguin_beaksize(penguins, species)
+        if sizes:
+            species_averages[species] = sum(sizes) / len(sizes)
+    # Print only the species that exist (to handle edge cases)
+    for species in ['Adelie','Gentoo','Chinstrap']:
+        if species in species_averages:
+            print(f"Average beak size for {species}: {species_averages[species]:.3f}")
+    return species_averages
+
+
+
+
+
+
 
 #Abbey Halabis Calculations: 
 def most_pop(penguins):   #Abbey Halabis's calculation 
